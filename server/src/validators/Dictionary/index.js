@@ -1,0 +1,1 @@
+module.exports = require('./Dictionary.validator.js');

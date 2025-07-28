@@ -10,4 +10,4 @@ const expressvalidate = (req, res, next) => {
     next();
   };
   
-module.exports = {expressvalidate, DictionaryValidator: require('./Dictionary')}
+module.exports = {expressvalidate, DictionaryValidator: require('./Dictionary'), DepartmentValidator: require('./Department')}

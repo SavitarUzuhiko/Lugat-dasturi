@@ -3,7 +3,7 @@ const DictionaryController = require('../../controllers/Dictionary');
 const { DictionaryValidator, expressvalidate } = require('../../validators');
 
 router.get(
-  '/',
+  '/all',
   DictionaryValidator.getDictionary(),
   expressvalidate,
   DictionaryController.getDictionary

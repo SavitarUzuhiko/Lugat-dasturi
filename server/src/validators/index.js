@@ -17,4 +17,5 @@ module.exports = {
   DictionaryValidator: require('./Dictionary'),
   DepartmentValidator: require('./Department'),
   CategoryValidator: require('./Category'),
+  WordValidator: require('./Word'),
 };

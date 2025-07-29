@@ -1,6 +1,7 @@
-const DepartmentModel = require('../../models/Department/Department.model');
+const DepartmentModel = require('../../models/Department');
 const HttpException  = require('../../utils/HttpException');
-const DictionaryModel = require('../../models/Dictionary/Dictionary.model');
+const DictionaryModel = require('../../models/Dictionary');
+const universalPaginate = require('../../utils/Universal_Paginate_Helper');
 
 class DepartmentController {
   static addDepartment = async (req, res) => {
@@ -14,18 +15,14 @@ class DepartmentController {
   static getDepartment = async (req, res) => {
     const { page = 1, limit = 10, dict = '' , search } = req.query;
 
-    let data;
-    let query = dict ? { dictionary:dict } : {};
-    if (search) {
-      const searchRegex = new RegExp(search, 'i');
-      const searchQuery = { $or: [{ name: searchRegex }] };
-      if (type) query = { $and: [{ dictionary:dict}, searchQuery] };
-      else query = searchQuery;
-    }
-    const total = await DepartmentModel.countDocuments(query);
-    data = await DepartmentModel.find(query)
-      .skip((page - 1) * limit)
-      .limit(limit);
+    const { data, total } = await universalPaginate({
+      model: require('../../models/Department'),
+      page: Number(page),
+      limit: Number(limit),
+      filters: dict ? { dictionary: dict } : {},
+      search,
+      searchFields: ['name'],
+    });
     res.json({ data, length: data.length, page, limit, total });
   };
 

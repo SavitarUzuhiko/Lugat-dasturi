@@ -35,7 +35,7 @@ class CategoriesController {
     const { id } = req.params;
     const item = await CategoryModel.findById(id);
     if (!item) throw new HttpException(404, 'Category not found');
-    await item.deleteOne({id});
+    await item.deleteOne({ id });
     res.json({ success: true, msg: 'Category deleted successfully' });
   };
 
@@ -46,10 +46,7 @@ class CategoriesController {
     const item = await CategoryModel.findById(id);
     if (!item) throw new HttpException(404, 'Category not found');
 
-    if (name) item.name = name;
-    if (dictionary) item.dictionary = dictionary;
-    if (department) item.department = department;
-    await item.save();
+    await item.updateOne({ name, dictionary, department });
     res.json({ success: true, msg: 'Category updated successfully' });
   };
 }

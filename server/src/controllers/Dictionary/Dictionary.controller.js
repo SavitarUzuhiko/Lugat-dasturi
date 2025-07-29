@@ -1,5 +1,6 @@
 const DictionaryModel = require('../../models/Dictionary');
 const HttpException = require('../../utils/HttpException');
+const universalPaginate = require('../../utils/Universal_Paginate_Helper');
 
 class dictionaryController {
   static addDictionary = async function(req, res, next) {
@@ -9,17 +10,14 @@ class dictionaryController {
   }
   static getDictionary = async function(req, res) {
     const {page=1, limit=10, type='', search} = req.query;
-    let data
-    let query = type ? {status:type} : {};
-    
-    if (search) {
-      const searchRegex = new RegExp(search, 'i');
-      const searchQuery = {$or: [{ word: searchRegex },{ definition: searchRegex }]};
-      if (type) query = {$and: [{ status: type },searchQuery]};
-      else query = searchQuery;
-    }
-    const total = await DictionaryModel.countDocuments(query);
-    data = await DictionaryModel.find(query).skip((page-1)*limit).limit(limit);
+    const { data, total } = await universalPaginate({
+      model: require('../../models/Dictionary'),
+      page: Number(page),
+      limit: Number(limit),
+      filters: type ? { status: type } : {},
+      search,
+      searchFields: ['word', 'definition'],
+    });
     res.json({data, length:data.length,page,limit,total});
   }
   static deleteDictionary = async (req,res,next) => {

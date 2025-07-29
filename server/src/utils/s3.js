@@ -13,9 +13,6 @@ const s3Client = new S3Client({
 });
 
 module.exports = uploadFileS3 = async (Key, Body) => {
-  console.log('region', secret.aws_region);
-  console.log('accessKeyId', secret.aws_access_key);
-  console.log('secretAccessKey', secret.aws_secret_key);
   const upload = new Upload({
     client: s3Client,
     params: {

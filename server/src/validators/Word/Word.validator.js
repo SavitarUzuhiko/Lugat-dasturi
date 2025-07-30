@@ -19,7 +19,7 @@ class WordValidator {
       body('definition').isString().withMessage('Definition must be a string'),
       body('category').notEmpty().withMessage('Category is required'),
       body('category').isMongoId().withMessage('Category is not valid'),
-      body('image').optional().isString().withMessage('Image must be a string'),
+      body('image').optional().isURL().withMessage('Image must be a string'),
     ]
   } 
 

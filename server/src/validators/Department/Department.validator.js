@@ -34,7 +34,7 @@ class DepartmentValidator {
     return [
       param('id').isMongoId().withMessage('Id is not valid'),
       body('name').isString().withMessage('Name must be a string'),
-      body('image').optional().isString().withMessage('Image must be a string'),
+      body('image').optional().isURL().withMessage('Image must be a string'),
     ]
   }
 }

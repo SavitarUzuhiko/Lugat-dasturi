@@ -16,7 +16,7 @@ class DictionaryValidator {
         .isLength({ min: 1 }).withMessage('Definition must not be empty if provided'),
       body('image')
         .optional()
-        .isString().withMessage('Image must be a string')
+        .isURL().withMessage('Image must be a string')
         .isLength({ min: 1 }).withMessage('Image must not be empty if provided'),
     ];
   }

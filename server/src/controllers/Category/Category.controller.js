@@ -4,14 +4,14 @@ const CategoryModel = require('../../models/Category');
 const HttpException = require('../../utils/HttpException');
 class CategoriesController {
   static addCategory = async (req, res) => {
-    const { name, dictionary, department } = req.body;
+    const { name, dictionary, department} = req.body;
     const dict = await DictionaryModel.findById(dictionary);
     if (!dict) throw new HttpException(404, 'Dictionary not found');
 
     const dep = await DepartmentModel.findById(department);
     if (!dep) throw new HttpException(404, 'Department not found');
 
-    await CategoryModel.create({ name, dictionary, department });
+    await CategoryModel.create({ name, dictionary, department});
     res.json({ success: true, msg: 'Category created successfully' });
   };
 
@@ -46,7 +46,11 @@ class CategoriesController {
     const item = await CategoryModel.findById(id);
     if (!item) throw new HttpException(404, 'Category not found');
 
-    await item.updateOne({ name, dictionary, department });
+    if(name !== item.name) item.name = name;
+    if(dictionary !== item.dictionary) item.dictionary = dictionary;
+    if(department !== item.department) item.department = department;
+
+    await item.save();
     res.json({ success: true, msg: 'Category updated successfully' });
   };
 }

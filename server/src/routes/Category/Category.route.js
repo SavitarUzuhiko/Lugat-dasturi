@@ -11,7 +11,6 @@ router.post(
 );
 router.get(
   '/all',
-  authMiddleware,
   CategoryValidator.getCategory(),
   expressvalidate,
   CategoryController.getCategory

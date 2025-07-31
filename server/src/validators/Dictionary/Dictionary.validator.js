@@ -12,12 +12,10 @@ class DictionaryValidator {
         .isLength({ min: 1 }).withMessage('Word must not be empty if provided'),
       body('definition')
         .optional()
-        .isString().withMessage('Definition must be a string')
-        .isLength({ min: 1 }).withMessage('Definition must not be empty if provided'),
+        .isString().withMessage('Definition must be a string'),
       body('image')
         .optional()
         .isURL().withMessage('Image must be a string')
-        .isLength({ min: 1 }).withMessage('Image must not be empty if provided'),
     ];
   }
   static getDictionary(){
@@ -45,12 +43,10 @@ class DictionaryValidator {
         .isLength({ min: 1 }).withMessage('Word must not be empty if provided'),
       body('definition')
         .optional()
-        .isString().withMessage('Definition must be a string')
-        .isLength({ min: 1 }).withMessage('Definition must not be empty if provided'),
+        .isString().withMessage('Definition must be a string'),
       body('image')
         .optional()
         .isString().withMessage('Image must be a string')
-        .isLength({ min: 1 }).withMessage('Image must not be empty if provided'),
     ]
   }
 }

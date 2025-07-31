@@ -1,13 +1,14 @@
 const DictionaryModel = require('../../models/Dictionary');
 const HttpException = require('../../utils/HttpException');
 const universalPaginate = require('../../utils/Universal_Paginate_Helper');
+const UploadModel = require('../../models/Upload');
 
 class dictionaryController {
   static addDictionary = async function (req, res) {
     const { status, word, definition, image } = req.body;
 
-    if (!word || !definition || !status)
-      throw new HttpException(400, 'word, definition and status are required');
+    if (!word || !status)
+      throw new HttpException(400, 'word and status are required');
 
     const save_file = await UploadModel.findOne({ filePath: image });
     if (!save_file) {

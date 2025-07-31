@@ -33,7 +33,7 @@ class Auth {
     if (!user) throw new HttpException(404, 'User not found');
     user.isActivate = true;
     await user.save();
-    res.redirect(`https://sammi.ac`);
+    res.redirect(secret.api_url);
   };
   static login = async (req, res) => {
     const { email, password } = req.body;

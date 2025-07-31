@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const CategoryController = require('../../controllers/Category');
 const { CategoryValidator, expressvalidate } = require('../../validators');
+const authMiddleware = require('../../middlewares/auth.middleware');
 
 router.post(
   '/add',
@@ -10,6 +11,7 @@ router.post(
 );
 router.get(
   '/all',
+  authMiddleware,
   CategoryValidator.getCategory(),
   expressvalidate,
   CategoryController.getCategory

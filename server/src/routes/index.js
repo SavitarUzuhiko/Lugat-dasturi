@@ -3,6 +3,7 @@ const routes = [
   {path:"/department", route:require('./Department')},
   {path:"/category", route:require('./Category')},
   {path:"/words", route:require('./Word')},
+  {path:"/auth", route:require('./Auth')},
   {path:'/upload', route: require('./Upload')}
 ]
 

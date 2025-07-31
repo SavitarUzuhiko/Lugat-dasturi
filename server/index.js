@@ -4,8 +4,10 @@ const app = express();
 const {port} = require('./src/utils/secret');
 const { connectDB } = require('./src/utils/db');
 const { errorMiddleware } = require('./src/middlewares/error.middleware');
+const cookieParser = require('cookie-parser');
 
 app.use(express.json());
+app.use(cookieParser({}))
 
 routes.forEach(element => {
   app.use(element.path, element.route);

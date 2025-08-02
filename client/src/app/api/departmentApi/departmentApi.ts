@@ -11,22 +11,21 @@ export const departmentApi = baseApi.injectEndpoints({
       })
     }),
     getDepartments: builder.query<getDepartmentRes, getDepartmentReq>({
-      query: ({ page = 1, limit = 10, dict = ''}) => ({
-        url: 'department/all',
-        method: 'GET',
-        params: { page, limit, dict},
-      }),
+      query: ({ dict = '', search = ''}) => {
+        if(search && search !== '') return `/department/all?dict=${dict}&search=${search}`
+        else return `/department/all?dict=${dict}`
+      }
     }),
     
     deleteDepartment: builder.mutation<DepartmentRes,deleteDepartmentReq>({
-      query: ({id}) => ({
-        url: `department/delete/${id}`,
+      query: ({_id}) => ({
+        url: `department/delete/${_id}`,
         method:"DELETE",
       })
     }),
     updateDepartment: builder.mutation<DepartmentRes, updateDepartmentReq>({
-      query: ({body,id}) => ({
-        url: `department/update/${id}`,
+      query: (body) => ({
+        url: `department/update/${body._id}`,
         method:"PUT",
         body
       })

@@ -1,10 +1,19 @@
 import UserImage from '@/assets/user.png';
 import { Button } from '@/components/ui/button';
 import { BookUser, BookCopy, Blocks, Menu, LogOut } from 'lucide-react';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const Sidebar = () => {
+  const location = useLocation();
+  useEffect(() => {
+    setLabels(
+      labels.map((l, i) =>
+        i === labels.findIndex((l) => l.target === location.pathname)
+          ? { ...l, checked: true } : { ...l, checked: false }
+      )
+    );
+  }, [location.pathname]);
   const [labels, setLabels] = useState([
     {
       label: "Lug'at",
@@ -46,13 +55,6 @@ export const Sidebar = () => {
             }
             onClick={() => {
               navigate(label.target);
-              setLabels(
-                labels.map((l, i) =>
-                  i === index
-                    ? { ...l, checked: true }
-                    : { ...l, checked: false }
-                )
-              );
             }}
           >
             {label.icon}

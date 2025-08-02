@@ -32,6 +32,7 @@ class WordController {
       page: Number(page),
       limit: Number(limit),
       filters: ctg ? { category: ctg } : {},
+      populate: 'category',
       search,
       searchFields: ['word', 'definition'],
     });

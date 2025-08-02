@@ -26,17 +26,16 @@ class DepartmentController {
   };
 
   static getDepartment = async (req, res) => {
-    const { page = 1, limit = 10, dict = '', search } = req.query;
+    const { dict = '', search} = req.query;
 
     const { data, total } = await universalPaginate({
       model: require('../../models/Department'),
-      page: Number(page),
-      limit: Number(limit),
       filters: dict ? { dictionary: dict } : {},
       search,
+      populate: 'dictionary',
       searchFields: ['name'],
     });
-    res.json({ data, length: data.length, page, limit, total });
+    res.json({ data, length: data.length,});
   };
 
   static deleteDepartment = async (req, res) => {
@@ -66,19 +65,35 @@ class DepartmentController {
     if (name !== item.name) item.name = name;
 
     if (image && image !== item.image) {
-      const save_file = await UploadModel.findOne({ filePath: image });
-      if (!save_file) {
+      const oldSaveFile = await UploadModel.findOne({
+        filePath: item.image,
+      });
+      const newSaveFile = await UploadModel.findOne({ filePath: image });
+
+      if (!newSaveFile) {
         throw new HttpException(400, 'Image file not found!');
       }
 
-      if (save_file.is_use) {
+      if (newSaveFile.is_use) {
         throw new HttpException(
           400,
-          'Image file is in use: ' + save_file.where_used
+          'Image file is in use: ' + newSaveFile.where_used
         );
       }
 
-      await save_file.updateOne({ is_use: true, where_used: 'Department' });
+      if (oldSaveFile) {
+        await UploadModel.updateOne(
+          { filePath: item.image },
+          { is_use: false, where_used: '' }
+        );
+      }
+
+      await newSaveFile.updateOne({
+        is_use: true,
+        where_used: 'Department',
+      });
+
+      item.image = image;
     }
 
     await item.save();

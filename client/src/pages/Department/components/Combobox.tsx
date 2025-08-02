@@ -23,11 +23,17 @@ type Props = {
   data:DictionaryData[]
   boxWidth?:string;
   fn:(item:string) => void;
+  selected?:string
 }
 
-export function Combobox({data,boxWidth,fn}:Props) {
+export function Combobox({data,boxWidth,fn,selected}:Props) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState(data[0].word);
+
+  React.useEffect(() => {
+    if(!selected) return
+    setValue(selected)
+  }, [selected])
 
   console.log("Combobox",data)
 

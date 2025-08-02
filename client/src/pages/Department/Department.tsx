@@ -10,12 +10,14 @@ import { Input } from '@/components/ui/input';
 import type { createDepartmentReq, Data } from '@/app/api/departmentApi/types';
 import {
   useCreateDepartmentMutation,
+  useDeleteDepartmentMutation,
   useGetDictionaryQuery,
   useLazyGetDepartmentsQuery,
   useUploadMutation,
 } from '@/app/api';
 import { useEffect, useState } from 'react';
 import type { DictionaryData } from '@/app/api/dictionaryApi/types';
+import { DepartmentTable } from './components/DepartmentTable';
 
 export const Department = () => {
   const [uploadFile, { isLoading }] = useUploadMutation();
@@ -23,6 +25,7 @@ export const Department = () => {
 
   const [getDepartment, { data: department }] = useLazyGetDepartmentsQuery();
   const [createDepartment] = useCreateDepartmentMutation();
+  const [deleteDept] =useDeleteDepartmentMutation();
   const [imagePath, setImagePath] = useState('');
   const [open, setOpen] = useState(false);
 
@@ -89,11 +92,9 @@ export const Department = () => {
 
   const selectTypes = async (word: string) => {
     if (word === 'All') word = '';
-    console.log(word);
     const result = dictionary?.data.find((item) => item.word === word);
-    let res;
-    if (result) res = dictionary?.data && (await getDepartment({ dict: result._id }));
-    console.log('get Reslut', res);
+    if (result)
+      return dictionary?.data && (await getDepartment({ dict: result._id }));
   };
 
   const sendTypes = (word: string) => {
@@ -101,6 +102,16 @@ export const Department = () => {
     reset({
       dictionary: result?._id,
     });
+  };
+
+  const deleteDepartment = async (id: string) => {
+    const { success } = await deleteDept({ _id: id }).unwrap();
+    if (success) {
+      toast.success('Dictionary deleted Successfully');
+      await getDepartment({ dict: '' });
+      return;
+    }
+    toast.error('Dictionary error');
   };
 
   return (
@@ -176,6 +187,9 @@ export const Department = () => {
           </div>
         </Modal>
       </nav>
+      {dictionary && dictionary.data && (
+        <DepartmentTable data={department?.data || []} onDelete={deleteDepartment} />
+      )}
     </main>
   );
 };

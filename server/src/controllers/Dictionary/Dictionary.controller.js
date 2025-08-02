@@ -43,6 +43,7 @@ class dictionaryController {
       page: Number(page),
       limit: Number(limit),
       filters: type ? { status: type } : {},
+      populate: '',
       search,
       searchFields: ['word', 'definition'],
     });

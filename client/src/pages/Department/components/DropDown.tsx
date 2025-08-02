@@ -1,28 +1,29 @@
-import type { DictionaryData } from '@/app/api/dictionaryApi/types';
+import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Pencil, Trash } from 'lucide-react';
-import { Button } from '../ui/button';
-import { UpdateModal } from '@/pages/Dictionary/components/UpdateModal';
+} from "@/components/ui/dropdown-menu"
+import { Pencil, Trash } from "lucide-react"
+import type { Data } from '@/app/api/departmentApi/types';
+import { UpdateModal } from "./UpdateModal";
+
 
 type Props = {
   children: React.ReactNode;
-  data: DictionaryData;
+  data: Data;
   deleteFn: (id: string) => void;
 };
 
-export function DropDown({ children, data, deleteFn }: Props) {
+export function Dropdown({children,data,deleteFn}:Props) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
       <DropdownMenuContent className='w-10' align='center'>
         <DropdownMenuGroup>
-          <UpdateModal data={data}>
+          <UpdateModal props_data={data}>
             <Button
               variant={'outline'}
               className='border-none cursor-pointer w-full'
@@ -34,7 +35,7 @@ export function DropDown({ children, data, deleteFn }: Props) {
           <DropdownMenuSeparator />
           <Button
             variant={'outline'}
-            onClick={() => deleteFn(data._id)}
+            onClick={() => deleteFn(data._id as string)}
             className='border-none cursor-pointer w-full'
           >
             <Trash className='text-red-500' /> O&apos;chirish
@@ -42,5 +43,5 @@ export function DropDown({ children, data, deleteFn }: Props) {
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
+  )
 }

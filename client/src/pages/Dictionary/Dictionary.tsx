@@ -16,7 +16,7 @@ import { Plus } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { useForm, Controller, useWatch } from 'react-hook-form';
-import { TableData } from '../../components/common/Table';
+import { TableData } from './components/DictionaryTable';
 
 export const Dictionary = () => {
   const [open, setOpen] = useState(false);

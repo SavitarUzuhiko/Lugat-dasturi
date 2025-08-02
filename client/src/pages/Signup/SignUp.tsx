@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
@@ -39,7 +39,7 @@ export const SignUp = () => {
   const navigate = useNavigate();
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
-  const [registr] = useRegistrMutation();
+  const [registr, { isLoading }] = useRegistrMutation();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -50,16 +50,24 @@ export const SignUp = () => {
     },
   });
 
+  useEffect(() => {
+    if(isLoading) toast.loading('Loading...');
+  },[isLoading])
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const data = {
       email: values.email,
       password: values.password_1,
     }
     console.log(values);
-    const {success} = await registr(data).unwrap();
-    if(success)
-      navigate('/');
-    await toast.success('Gmailga kirib accountni aktivlashtiring!');
+    try {
+      const {success} = await registr(data).unwrap();
+      if(success)
+        navigate('/login');
+      toast.success('Registration successful');
+    } catch (error : any) {
+      toast.error(error.data.msg as string);
+    }
   }
 
   return (

@@ -1,9 +1,10 @@
 import { baseApi } from '../baseApi';
-import type { LoginRes, LoginReq } from './types';
+import type { LoginRes, LoginReq, User } from './types';
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    registr: builder.mutation<LoginReq, LoginRes>({
+    // Register
+    registr: builder.mutation<LoginRes, LoginReq>({
       query: (credentials) => ({
         url: '/auth/registr',
         method: 'POST',
@@ -11,7 +12,9 @@ export const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['Auth'],
     }),
-    login: builder.mutation<LoginReq, LoginRes>({
+
+    // Login
+    login: builder.mutation<LoginRes, LoginReq>({
       query: (credentials) => ({
         url: '/auth/login',
         method: 'POST',
@@ -19,7 +22,17 @@ export const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['Auth'],
     }),
+
+    // Get current user (me)
+    getMe: builder.query<User, void>({
+      query: () => ({
+        url: '/auth/me',
+        method: 'GET',
+        credentials: 'include',
+      }),
+      providesTags: ['Auth'],
+    }),
   }),
 });
 
-export const {useRegistrMutation , useLoginMutation} = authApi
+export const { useRegistrMutation, useLoginMutation, useGetMeQuery } = authApi;

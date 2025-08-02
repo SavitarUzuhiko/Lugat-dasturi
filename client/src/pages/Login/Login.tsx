@@ -1,9 +1,9 @@
+// Login.tsx
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
-
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useLoginMutation } from '@/app/api';
@@ -21,11 +21,12 @@ export const Login = () => {
     try {
       const { success, token } = await login({ email, password }).unwrap();
       if (token) localStorage.setItem('token', token);
-
-      if (success) navigate('/');
-      toast.success('Login successful')
+      if (success) {
+        toast.success('Login successful');
+        navigate('/');
+      }
     } catch (error: any) {
-      toast.error(error.data.msg)
+      toast.error(error?.data?.msg || 'Login failed');
     }
   };
 
@@ -85,7 +86,6 @@ export const Login = () => {
             </Button>
           </form>
         </CardContent>
-        <CardFooter></CardFooter>
       </Card>
     </div>
   );

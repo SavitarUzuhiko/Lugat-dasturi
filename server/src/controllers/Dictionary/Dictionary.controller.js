@@ -48,6 +48,14 @@ class dictionaryController {
     });
     res.json({ data, length: data.length, page, limit, total });
   };
+  static getDictionaryById = async function (req, res) {
+    const { id } = req.params;
+    
+    const data = DictionaryModel.findById(id)
+    if(!data) throw new HttpException(404, "Dictionary not found")
+
+    res.json({ data });
+  };
   static deleteDictionary = async (req, res) => {
     const { id } = req.params;
 
@@ -62,7 +70,7 @@ class dictionaryController {
       { is_use: false, where_used: '' }
     );
 
-    await item.deleteOne(id);
+    await item.deleteOne({ _id: id });
     res.json({ success: true, msg: 'Dictionary deleted successfully' });
   };
   static updateDictionary = async (req, res) => {

@@ -9,12 +9,12 @@ import {
 import type React from 'react';
 
 type Props = {
-  children: React.ReactNode;
-  trigger: React.ReactNode;
-  send: () => void;
-  open: boolean;
+  children?: React.ReactNode;
+  trigger?: React.ReactNode;
+  send?: () => void;
+  open?: boolean;
   loader?: boolean;
-  onOpenChange: (open: boolean) => void;
+  onOpenChange?: (open: boolean) => void;
 };
 
 export function Modal({ trigger, children, send, open, onOpenChange , loader}: Props) {
@@ -22,7 +22,7 @@ export function Modal({ trigger, children, send, open, onOpenChange , loader}: P
     <Dialog open={open} onOpenChange={onOpenChange}>
       <form>
         <DialogTrigger asChild>
-          <Button variant="default">{trigger}</Button>
+          {trigger}
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           {children}

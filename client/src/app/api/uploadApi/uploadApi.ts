@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import type { UploadRes } from "../dictionaryApi/types";
 
 export const uploadApi = createApi({
   reducerPath: 'uploadApi',
@@ -6,7 +7,7 @@ export const uploadApi = createApi({
     baseUrl: 'http://localhost:5000/',
   }),
   endpoints: (builder) => ({
-    upload: builder.mutation({
+    upload: builder.mutation<UploadRes,FormData>({
       query: (data) => ({
         url: 'upload',
         method: 'POST',

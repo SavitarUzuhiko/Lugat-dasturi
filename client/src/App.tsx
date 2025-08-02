@@ -1,8 +1,18 @@
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { Login, Sidebar, SignUp , Dictionary, Department, Category, Word} from './pages';
+import { useEffect } from 'react';
 
 const App = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (window.location.pathname === '/') navigate('/dictionary');
+  }, []);
+
+  useEffect(() => {
+    if (!localStorage.getItem('token')) navigate('/login');
+  }, [localStorage.getItem('token')]);
   return (
     <div
       className={

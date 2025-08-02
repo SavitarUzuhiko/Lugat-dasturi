@@ -7,6 +7,7 @@ import { Card, CardContent, CardFooter, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useLoginMutation } from '@/app/api';
+import toast, { Toaster } from 'react-hot-toast';
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -17,15 +18,20 @@ export const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { success, token } = await login({ email, password }).unwrap();
+    try {
+      const { success, token } = await login({ email, password }).unwrap();
+      if (token) localStorage.setItem('token', token);
 
-    if (token) localStorage.setItem('token', token);
-
-    if (success) navigate('/');
+      if (success) navigate('/');
+      toast.success('Login successful')
+    } catch (error: any) {
+      toast.error(error.data.msg)
+    }
   };
 
   return (
     <div className='h-screen w-screen flex items-center justify-center bg-gray-100'>
+      <Toaster />
       <Card className='w-full max-w-md shadow-2xl gap-4'>
         <div>
           <div className='mx-6 flex justify-between items-center'>

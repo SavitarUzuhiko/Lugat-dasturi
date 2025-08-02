@@ -4,7 +4,7 @@ const path = require('path');
 
 
 const checkFileType = (file, cb) => {
-  const fileTypes = /jpeg|jpg|png/;
+  const fileTypes = /jpeg|jpg|png|ico|docx|pdf|txt|doc|mp4|flv/;
   const extName = fileTypes.test(path.extname(file.originalname).toLowerCase());
   const mimeType = fileTypes.test(file.mimetype);
   if (mimeType && extName) {

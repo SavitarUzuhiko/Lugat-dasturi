@@ -16,14 +16,14 @@ class Auth {
     const new_user = await AuthModel.create({ email, password: hash });
 
     const token = jwt.sign({ id: new_user._id }, jwt_token, {
-      expiresIn: '1d',
+      expiresIn: '5m',
     });
 
     await sendMail(email, `${secret.api_url}/auth/activate/${new_user._id}`);
 
     res.cookie('jwt_token', jwt_token, {
       httpOnly: true,
-      maxAge: 24 * 60 * 60 * 1000,
+      maxAge: 5 * 60 * 1000,
     });
     res.json({ success: true, msg: 'User created successfully', token });
   };

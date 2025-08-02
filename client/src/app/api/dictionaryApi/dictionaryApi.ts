@@ -59,4 +59,4 @@ export const dictionaryApi = baseApi.injectEndpoints({
 });
 
 export const { useCreateDictionaryMutation, useLazyGetByIdQuery ,
-  useGetByIdQuery, useGetDictionaryQuery, useDeleteDictionaryMutation, useUpdateDictionaryMutation} = dictionaryApi;
+  useGetByIdQuery, useGetDictionaryQuery, useDeleteDictionaryMutation, useUpdateDictionaryMutation , useLazyGetDictionaryQuery} = dictionaryApi;

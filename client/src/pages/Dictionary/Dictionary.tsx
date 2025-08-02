@@ -4,7 +4,7 @@ import {
   useGetDictionaryQuery,
   useUploadMutation,
 } from '@/app/api';
-import type { CreateDictionaryReq } from '@/app/api/dictionaryApi/types';
+import type { CreateDictionaryReq, FormInputs } from '@/app/api/dictionaryApi/types';
 import { Modal } from '@/components/common/Modal';
 import { Button } from '@/components/ui/button';
 import { DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -17,12 +17,6 @@ import { useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { useForm, Controller, useWatch } from 'react-hook-form';
 import { TableData } from '../../components/common/Table';
-
-type FormInputs = {
-  word: string;
-  definition?: string;
-  status: 'historical' | 'futuristic' | '';
-};
 
 export const Dictionary = () => {
   const [open, setOpen] = useState(false);
@@ -55,6 +49,7 @@ export const Dictionary = () => {
       word: '',
       definition: '',
       status: '',
+      image:''
     },
   });
 

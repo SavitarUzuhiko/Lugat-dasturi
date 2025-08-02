@@ -2,6 +2,7 @@ const DepartmentModel = require('../../models/Department');
 const HttpException = require('../../utils/HttpException');
 const DictionaryModel = require('../../models/Dictionary');
 const universalPaginate = require('../../utils/Universal_Paginate_Helper');
+const UploadModel = require('../../models/Upload');
 
 class DepartmentController {
   static addDepartment = async (req, res) => {
@@ -10,18 +11,16 @@ class DepartmentController {
     if (!dict) throw new HttpException(404, 'Dictionary not found');
 
     const save_file = await UploadModel.findOne({ filePath: image });
-    if (!save_file) {
-      throw new HttpException(400, 'Image file not found!');
-    }
 
-    if (save_file.is_use) {
-      throw new HttpException(
-        400,
-        'Image file is in use: ' + save_file.where_used
-      );
+    if (save_file) {
+      if (save_file.is_use) {
+        throw new HttpException(
+          400,
+          'Image file is in use: ' + save_file.where_used
+        );
+      }
+      await save_file.updateOne({ is_use: true, where_used: 'Department' });
     }
-
-    await save_file.updateOne({ is_use: true, where_used: 'Department' });
     await DepartmentModel.create({ name, dictionary, image });
     res.json({ success: true, msg: 'Department created successfully' });
   };

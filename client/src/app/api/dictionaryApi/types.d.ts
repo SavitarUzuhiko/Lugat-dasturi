@@ -37,7 +37,10 @@ export interface FormInputs {
   word: string;
   definition?: string;
   status: 'historical' | 'futuristic' | '';
+  image?:string;
 }
+
+export 
 
 export interface UploadRes {
   success: Boolean;

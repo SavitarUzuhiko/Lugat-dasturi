@@ -9,7 +9,6 @@ import {
 import { Pencil, Trash } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { UpdateModal } from '@/pages/Dictionary/components/UpdateModal';
-import type { Data } from '@/app/api/departmentApi/types';
 
 type Props = {
   children: React.ReactNode;

@@ -33,7 +33,11 @@ export const Dictionary = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await getDictionary().unwrap();
+      try {
+        await getDictionary().unwrap();
+      } catch (error : any) {
+        if(error.msg === 'jwt expired') localStorage.removeItem('token');
+      }
     };
     fetchData();
   }, [search, checked]);

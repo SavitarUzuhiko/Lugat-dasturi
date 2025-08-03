@@ -1,9 +1,9 @@
 import { baseApi } from "../baseApi";
-import type { createDepartmentReq, deleteDepartmentReq, DepartmentRes, getDepartmentReq, getDepartmentRes, updateDepartmentReq } from "./types";
+import type { createDepartmentReq, createDepartmentRes, deleteDepartmentReq, DepartmentRes, getDepartmentReq, getDepartmentRes, updateDepartmentReq } from "./types";
 
 export const departmentApi = baseApi.injectEndpoints({
   endpoints: builder => ({
-    createDepartment: builder.mutation<DepartmentRes, createDepartmentReq>({
+    createDepartment: builder.mutation<createDepartmentRes, createDepartmentReq>({
       query: body => ({
         url: 'department/add',
         method:'POST',

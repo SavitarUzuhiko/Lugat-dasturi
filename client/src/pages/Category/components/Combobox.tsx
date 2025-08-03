@@ -15,27 +15,29 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import type { DictionaryData } from '@/app/api/dictionaryApi/types';
-import { Badge } from '@/components/ui/badge';
+import type { Data } from '@/app/api/departmentApi/types';
+import type { Category, Department } from '@/app/api/baseApi/types';
 
 
 type Props = {
-  data:DictionaryData[]
+  data:any[];
   boxWidth?:string;
   fn:(item:string) => void;
   selected?:string
 }
 
-export function Combobox({data,boxWidth,fn,selected}:Props) {
+export function ComboboxCategory({data,boxWidth,fn,selected}:Props) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState('');
+
+  console.log("Category Combobox", data);
 
   React.useEffect(() => {
     if(!selected) return
     setValue(selected)
   }, [selected])
 
-  console.log("Combobox Dict",data)
+  console.log("Combobox department",data)
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -47,7 +49,7 @@ export function Combobox({data,boxWidth,fn,selected}:Props) {
             className='justify-between'
           >
             {value
-              ? data.find((framework) => framework.word === value)?.word
+              ? data.find((framework) => framework.name === value)?.name
               : "Lug'atni tanlang"}
             <ChevronsUpDown className='opacity-50' />
           </Button>
@@ -58,19 +60,22 @@ export function Combobox({data,boxWidth,fn,selected}:Props) {
           <CommandList>
             <CommandEmpty>No framework found.</CommandEmpty>
             <CommandGroup>
-              {data && data.map((framework) => (
+              {data && data.map((framework) => {
+                console.log(framework);
+                return (
                 <CommandItem
                   key={framework._id}
-                  value={framework.word}
+                  value={framework?.word}
                   onSelect={(currentValue) => {
                     setValue(currentValue === value ? '' : currentValue);
+                    console.log(currentValue, 'currentValue');
                     setOpen(false);
                     fn(currentValue)
                   }}
                 >
-                  <p className='flex justify-between w-full'>{framework.word} <Badge variant={framework.status}>{framework.status}</Badge></p>
+                  <p className='flex justify-between w-full'>{framework.word}</p>
                 </CommandItem>
-              ))}
+              )})}
             </CommandGroup>
           </CommandList>
         </Command>

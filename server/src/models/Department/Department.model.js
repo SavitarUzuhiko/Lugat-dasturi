@@ -6,4 +6,4 @@ const departmentSchema = new Schema({
   image:{type: String,optional: true}
 },{timestamps: true, versionKey: false});
 
-module.exports = model('Departments', departmentSchema);
+module.exports = model('Department', departmentSchema);

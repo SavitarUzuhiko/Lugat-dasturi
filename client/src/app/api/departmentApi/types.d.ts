@@ -14,8 +14,8 @@ export interface getDepartmentReq {
 
 export interface Data {
   _id?:string;
-  name:string;
-  dictionary:DictionaryData | string;
+  name?:string;
+  dictionary?:DictionaryData | string;
   image?:string;
 }
 

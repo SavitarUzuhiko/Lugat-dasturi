@@ -32,7 +32,7 @@ const App = () => {
       localStorage.removeItem('token');
       navigate('/login');
     }
-  }, 60 * 1000);
+  }, 60 * 60 * 1000);
 
   useEffect(() => {
     const token = localStorage.getItem('token');

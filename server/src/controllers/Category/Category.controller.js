@@ -26,7 +26,7 @@ class CategoriesController {
       query.$or = [{ name: searchRegex }];
     }
 
-    const selectedDict = await CategoryModel.find(query);
+    const selectedDict = await CategoryModel.find(query).populate('dictionary').populate('department').skip((page - 1) * limit).limit(limit);
 
     res.json({ data: selectedDict, length: selectedDict.length, page, limit });
   };

@@ -28,7 +28,7 @@ class DepartmentController {
   static getDepartment = async (req, res) => {
     const { dict = '', search} = req.query;
 
-    const { data, total } = await universalPaginate({
+    const { data } = await universalPaginate({
       model: require('../../models/Department'),
       filters: dict ? { dictionary: dict } : {},
       search,

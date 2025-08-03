@@ -30,7 +30,7 @@ export function Modal({ trigger, children, send, open, onOpenChange , loader}: P
             <DialogClose asChild>
               <Button variant="outline">Bekor qilish</Button>
             </DialogClose>
-            <Button type="submit" disabled={loader} onClick={send}>
+            <Button type="submit" disabled={loader} onClick={() => {send && send();}} >
               Saqlash
             </Button>
           </DialogFooter>

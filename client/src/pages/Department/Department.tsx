@@ -41,13 +41,7 @@ export const Department = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<Data>({
-    defaultValues: {
-      name: '',
-      dictionary: '',
-      image: '',
-    },
-  });
+  } = useForm<Data>();
 
   console.log('Dep', department);
 
